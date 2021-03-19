@@ -14,7 +14,7 @@ class MainActivity : AppCompatActivity() {
         initView()
     }
     private fun initView(){
-        val map= mapOf<String,String>("username" to "huang.","password" to "clannadhr01")
+        val map= mapOf<String,String>("username" to "huang.","password" to "")
       button.setOnClickListener {
 //           Request.getRequest(URL,object :OnResultResponse{
 //        override fun onRightReturn(string: String) {
