@@ -38,6 +38,7 @@ class MainActivity : AppCompatActivity() {
 //        }
 //
 //    })
+
        Request.sendPost("https://www.wanandroid.com/user/login",
                map as HashMap<String, String>,
                object :OnResultResponse{
@@ -59,6 +60,12 @@ class MainActivity : AppCompatActivity() {
                        /***
                         * 这样就不用开启ui线程，而是使用livedata的性质传出去，可以通过toast成功显示证明，
                         * 但livedata底层还没有弄懂
+                        */
+                       /***
+                        * livedata 的post原理，是在此方法类使用了线程池，将其值传入至主线程
+                        * ArchTaskExecutor.getinstance().postToMainThread
+                        * 所以本质上还是线程池操作
+                        * 及理论上可以通过改写工具类实现
                         */
                    }
 
