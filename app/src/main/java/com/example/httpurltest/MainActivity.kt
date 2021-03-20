@@ -4,16 +4,27 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Observer
 import kotlinx.android.synthetic.main.activity_main.*
 import org.json.JSONObject
 
 class MainActivity : AppCompatActivity() {
     private val URL:String="https://www.wanandroid.com/project/tree/json"
+    private val textLiveData=MutableLiveData<String>()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         initView()
+        initObserve()
     }
+
+    private fun initObserve() {
+        textLiveData.observe(this, Observer {
+            Toast.makeText(this@MainActivity, it, Toast.LENGTH_LONG).show()
+        })
+    }
+
     private fun initView(){
         val map= mapOf<String,String>("username" to "huang.","password" to "")
       button.setOnClickListener {
@@ -33,7 +44,22 @@ class MainActivity : AppCompatActivity() {
                    override fun onRightReturn(string: String) {
                   val jsonObjects=JSONObject(string)
                   val msg=jsonObjects.getString("errorMsg")
-                       Toast.makeText(this@MainActivity, msg, Toast.LENGTH_LONG).show()
+                     //  Toast.makeText(this@MainActivity, msg, Toast.LENGTH_LONG).show()
+                       /***
+                        * 线程仍在子线程
+                        */
+//                      runOnUiThread {
+//                          Toast.makeText(this@MainActivity, msg, Toast.LENGTH_LONG).show()
+//                      }
+                       /***
+                        * 此处可以在线程池工具类进行增加ui线程管理，此处做法有问题
+                        * 尝试使用livedata改造一下
+                        */
+                       textLiveData.postValue(msg)
+                       /***
+                        * 这样就不用开启ui线程，而是使用livedata的性质传出去，可以通过toast成功显示证明，
+                        * 但livedata底层还没有弄懂
+                        */
                    }
 
                    override fun onErrorReturn(e: Exception) {
