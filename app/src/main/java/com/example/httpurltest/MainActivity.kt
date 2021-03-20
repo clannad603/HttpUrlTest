@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_main.*
+import org.json.JSONObject
 
 class MainActivity : AppCompatActivity() {
     private val URL:String="https://www.wanandroid.com/project/tree/json"
@@ -30,7 +31,9 @@ class MainActivity : AppCompatActivity() {
                map as HashMap<String, String>,
                object :OnResultResponse{
                    override fun onRightReturn(string: String) {
-                   textView.text=string
+                  val jsonObjects=JSONObject(string)
+                  val msg=jsonObjects.getString("errorMsg")
+                       Toast.makeText(this@MainActivity, msg, Toast.LENGTH_LONG).show()
                    }
 
                    override fun onErrorReturn(e: Exception) {
@@ -38,6 +41,7 @@ class MainActivity : AppCompatActivity() {
                    }
 
                })
+
       }
 
 

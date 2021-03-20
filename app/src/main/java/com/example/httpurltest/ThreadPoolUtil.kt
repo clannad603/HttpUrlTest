@@ -8,14 +8,8 @@ import java.util.logging.Logger
 /***
  * created by hashcode
  */
-class ThreadPoolUtil {
-    companion object {
-        fun getInstance() = SingleHolder.SINGLE_HOLDER
-    }
+object ThreadPoolUtil {
 
-    object SingleHolder {
-        val SINGLE_HOLDER = ThreadPoolUtil()
-    }
     /***
      * 获取cpu核心数
      */

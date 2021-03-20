@@ -40,7 +40,7 @@ object Request {
                 connection.disConnect()
           }
             }
-        ThreadPoolUtil.getInstance().addTask(runnable)
+        ThreadPoolUtil.addTask(runnable)
     }
 
     /***
@@ -71,7 +71,7 @@ object Request {
             connection.disConnect()
         }
     }
-    ThreadPoolUtil.getInstance().addTask(runnable)
+    ThreadPoolUtil.addTask(runnable)
 }
 
     /***
